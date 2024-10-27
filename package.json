@@ -1,0 +1,15 @@
+{
+  "name": "tech-line-bot",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "repository": "https://github.com/kerokerotur/tech-line-bot.git",
+  "author": "kerokerotur <kerokerotur2000@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.8.1"
+  }
+}

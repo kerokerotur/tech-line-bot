@@ -1,0 +1,29 @@
+name: Send Qiita Articles to LINE
+
+on:
+  schedule:
+    - cron: "0 * * *" # 毎日7時に実行
+  workflow_dispatch:
+
+jobs:
+  sendQiitaArticles:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run script
+        env:
+          QIITA_ACCESS_TOKEN: ${{ secrets.QIITA_ACCESS_TOKEN }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_CHANNEL_USER_ID: ${{ secrets.LINE_CHANNEL_USER_ID }}
+        run: npx ts-node src/index.ts
