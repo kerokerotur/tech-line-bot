@@ -1,4 +1,4 @@
-name: Send Qiita Articles to LINE
+name: Send Qiita Articles to LINE Manual
 
 on:
   workflow_dispatch:
