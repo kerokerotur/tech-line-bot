@@ -24,7 +24,7 @@ interface QiitaArticle {
 // Qiitaの最新記事を取得する関数
 async function fetchQiitaArticles(): Promise<QiitaArticle[]> {
     try {
-        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&tag:&${targetTag}per_page=5`, {
+        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&query=tag:${targetTag}&per_page=5`, {
             headers: {
                 'Authorization': `Bearer ${qiitaToken}`
             }
@@ -61,7 +61,7 @@ async function sendLineMessage(message: string): Promise<void> {
 // メイン処理
 (async () => {
     const articles = await fetchQiitaArticles();
-    if (articles.length = 0) {
+    if (!articles.length) {
       console.log("no articles found")
       return
     }
