@@ -1,5 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
+import {format, subDays} from 'date-fns'
 dotenv.config();
 
 // 環境変数はgithub actions側で指定する
@@ -10,7 +11,6 @@ const qiitaToken: string = process.env.QIITA_ACCESS_TOKEN!;
 const lineToken: string = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
 // LINEチャンネルのユーザーID
 const userId: string = process.env.LINE_CHANNEL_USER_ID!;
-
 // 取得する記事のタグ
 const targetTag: string = "flutter"
 
@@ -22,9 +22,9 @@ interface QiitaArticle {
 }
 
 // Qiitaの最新記事を取得する関数
-async function fetchQiitaArticles(): Promise<QiitaArticle[]> {
+async function fetchQiitaArticles(fromDateString: string): Promise<QiitaArticle[]> {
     try {
-        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&query=tag:${targetTag}&per_page=5`, {
+        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&query=tag:${targetTag}&created:>=${fromDateString}&per_page=30`, {
             headers: {
                 'Authorization': `Bearer ${qiitaToken}`
             }
@@ -58,13 +58,17 @@ async function sendLineMessage(message: string): Promise<void> {
     }
 }
 
+const _format = (date: Date) => {
+  return format(date, "yyyy-MM-dd")
+}
+
 // メイン処理
 (async () => {
-    const articles = await fetchQiitaArticles();
-    if (!articles.length) {
-      console.log("no articles found")
-      return
-    }
+    const today = new Date()
+    const yesterday = subDays(today, 1)
+    console.log(`executionDate: ${today}`)
+    const articles = await fetchQiitaArticles(_format(yesterday));
+    if (!articles.length) return
     console.log(`${articles.length}件の記事を取得しました`)
     const promise = articles.map(article => {
       const message = `${article.title}\n${article.url}`
