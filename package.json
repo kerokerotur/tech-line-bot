@@ -2,7 +2,6 @@
   "name": "tech-line-bot",
   "version": "1.0.0",
   "main": "src/index.ts",
-  "type": "module",
   "repository": "https://github.com/kerokerotur/tech-line-bot.git",
   "author": "kerokerotur <kerokerotur2000@gmail.com>",
   "license": "MIT",

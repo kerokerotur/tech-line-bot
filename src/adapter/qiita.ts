@@ -1,9 +1,5 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
-
-// Qiitaのアクセストークン
-const qiitaToken: string = process.env.QIITA_ACCESS_TOKEN!;
+import { QIITA_ACCESS_TOKEN } from '../env';
 
 // 取得する記事のタグ。複数指定する場合はカンマ区切りで指定する
 const targetTag: string = "flutter,dart"
@@ -21,7 +17,7 @@ export const getArticleFromQiita = async (fromDateString: string): Promise<Qiita
   try {
     const response = await axios.get<QiitaArticle[]>(`${endpoint}?page=1&per_page=30&query=tag:${targetTag} created:>=${fromDateString}`, {
         headers: {
-            'Authorization': `Bearer ${qiitaToken}`
+            'Authorization': `Bearer ${QIITA_ACCESS_TOKEN}`
         }
     });
     return response.data;
