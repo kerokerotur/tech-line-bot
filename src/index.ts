@@ -61,7 +61,10 @@ async function sendLineMessage(message: string): Promise<void> {
 // メイン処理
 (async () => {
     const articles = await fetchQiitaArticles();
-    if (articles.length = 0) return
+    if (articles.length = 0) {
+      console.log("no articles found")
+      return
+    }
     const promise = articles.map(article => {
       const message = `${article.title}\n${article.url}`
       return sendLineMessage(message);
