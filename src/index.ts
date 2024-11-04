@@ -11,7 +11,11 @@ const lineToken: string = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
 // LINEチャンネルのユーザーID
 const userId: string = process.env.LINE_CHANNEL_USER_ID!;
 
+// 取得する記事のタグ
+const targetTag: string = "flutter"
+
 // Qiitaの記事の型定義
+// 参考：https://qiita.com/api/v2/docs#%E6%8A%95%E7%A8%BF
 interface QiitaArticle {
     title: string;
     url: string;
@@ -20,7 +24,7 @@ interface QiitaArticle {
 // Qiitaの最新記事を取得する関数
 async function fetchQiitaArticles(): Promise<QiitaArticle[]> {
     try {
-        const response = await axios.get<QiitaArticle[]>('https://qiita.com/api/v2/items?page=1&per_page=5', {
+        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&tag:&${targetTag}per_page=5`, {
             headers: {
                 'Authorization': `Bearer ${qiitaToken}`
             }
@@ -57,10 +61,10 @@ async function sendLineMessage(message: string): Promise<void> {
 // メイン処理
 (async () => {
     const articles = await fetchQiitaArticles();
-    if (articles.length > 0) {
-        const message = articles.map(article => `タイトル: ${article.title}\nURL: ${article.url}`).join('\n\n');
-        await sendLineMessage(message);
-    } else {
-        console.log('No new articles found.');
-    }
+    if (articles.length = 0) return
+    const promise = articles.map(article => {
+      const message = `${article.title}\n${article.url}`
+      return sendLineMessage(message);
+    })
+    await Promise.all(promise)
 })();
