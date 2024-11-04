@@ -6,7 +6,7 @@ dotenv.config();
 
 // Qiitaのアクセストークン
 const qiitaToken: string = process.env.QIITA_ACCESS_TOKEN!;
-// LINEのチャネルアクセストークン
+// LINEのチャンネルアクセストークン
 const lineToken: string = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
 // LINEチャンネルのユーザーID
 const userId: string = process.env.LINE_CHANNEL_USER_ID!;
