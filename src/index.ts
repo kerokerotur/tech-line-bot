@@ -65,6 +65,7 @@ async function sendLineMessage(message: string): Promise<void> {
       console.log("no articles found")
       return
     }
+    console.log(`${articles.length}件の記事を取得しました`)
     const promise = articles.map(article => {
       const message = `${article.title}\n${article.url}`
       return sendLineMessage(message);
