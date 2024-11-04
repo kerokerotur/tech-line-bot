@@ -11,8 +11,8 @@ const qiitaToken: string = process.env.QIITA_ACCESS_TOKEN!;
 const lineToken: string = process.env.LINE_CHANNEL_ACCESS_TOKEN!;
 // LINEチャンネルのユーザーID
 const userId: string = process.env.LINE_CHANNEL_USER_ID!;
-// 取得する記事のタグ
-const targetTag: string = "flutter"
+// 取得する記事のタグ。複数指定する場合はカンマ区切りで指定する
+const targetTag: string = "flutter,dart"
 
 // Qiitaの記事の型定義
 // 参考：https://qiita.com/api/v2/docs#%E6%8A%95%E7%A8%BF

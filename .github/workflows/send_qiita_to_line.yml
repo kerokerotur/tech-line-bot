@@ -10,19 +10,19 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: "14"
+          node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: yarn
 
       - name: Run script
         env:
           QIITA_ACCESS_TOKEN: ${{ secrets.QIITA_ACCESS_TOKEN }}
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_CHANNEL_USER_ID: ${{ secrets.LINE_CHANNEL_USER_ID }}
-        run: npx ts-node src/index.ts
+        run: node --loader ts-node/esm src/index.ts
