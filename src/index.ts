@@ -24,7 +24,7 @@ interface QiitaArticle {
 // Qiitaの最新記事を取得する関数
 async function fetchQiitaArticles(fromDateString: string): Promise<QiitaArticle[]> {
     try {
-        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&query=tag:${targetTag}&created:>=${fromDateString}&per_page=30`, {
+        const response = await axios.get<QiitaArticle[]>(`https://qiita.com/api/v2/items?page=1&query=tag:${targetTag} created:>=${fromDateString}&per_page=30`, {
             headers: {
                 'Authorization': `Bearer ${qiitaToken}`
             }
@@ -66,7 +66,7 @@ const _format = (date: Date) => {
 (async () => {
     const today = new Date()
     const yesterday = subDays(today, 1)
-    console.log(`executionDate: ${today}`)
+    console.log(`executionDate: ${_format(today)}`)
     const articles = await fetchQiitaArticles(_format(yesterday));
     if (!articles.length) return
     console.log(`${articles.length}件の記事を取得しました`)
